@@ -6,24 +6,29 @@ import time
 def near(boarditem):
     x = int(boarditem[0])
     y = int(boarditem[1])
+    xp = x + 1
+    xm = x - 1
+    yp = y + 1
+    ym = y - 1
+    # Yes, this actually makes it quicker. By 5 FPS.
     found = 0
     #This is the slow bit, as far as I can tell.
     #This is the quickest way of doing it, though.
-    if (x-1, y-1) in board:
+    if (xm, ym) in board:
         found += 1
-    if (x-1, y) in board:
+    if (xm, y) in board:
         found += 1
-    if (x-1, y+1) in board:
+    if (xm, yp) in board:
         found += 1
-    if (x, y-1) in board:
+    if (x, ym) in board:
         found += 1
-    if (x, y+1) in board:
+    if (x, yp) in board:
         found += 1
-    if (x+1, y-1) in board:
+    if (xp, ym) in board:
         found += 1
-    if (x+1, y) in board:
+    if (xp, y) in board:
         found += 1
-    if (x+1, y+1) in board:
+    if (xp, yp) in board:
         found += 1
     return found
 
@@ -38,7 +43,7 @@ ywidth = 100
 stay = (2, 3)
 born = (3, )
 
-FPS = 100
+FPS = 60
 
 for x in range(0, xwidth):
     for y in range(0, ywidth):
@@ -68,7 +73,7 @@ while True:
 
     if time.time() - lastprint > 1/FPS:
         lastprint = time.time()
-        for x in range(0, xwidth):
+        for x in range(0, xwidth ):
             for y in range(0, ywidth):
                 if (x, y) in board:
                     outstr += "#"
